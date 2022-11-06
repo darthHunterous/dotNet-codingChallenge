@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using RoboProject.Entities;
-using RoboProject.Entities.ArmStates;
+using RoboProject.Entities.Interfaces;
 
 namespace RoboProject.Controllers
 {
@@ -11,86 +10,20 @@ namespace RoboProject.Controllers
     {
         private Robo? Robo;
 
+        private IDeserializerHelper _deserializerHelper;
+
         private readonly ILogger<HeadController> _logger;
 
-        public ArmController(ILogger<HeadController> logger)
+        public ArmController(ILogger<HeadController> logger, IDeserializerHelper deserializerHelper)
         {
             _logger = logger;
+            _deserializerHelper = deserializerHelper;
         }
 
         [HttpGet(Name = "GetArmCommands")]
         public IActionResult Get(string command, string arm)
         {
-            string roboInternalState = System.IO.File.ReadAllText("robo.json");
-            Robo = JsonConvert.DeserializeObject<Robo>(roboInternalState);
-
-            if (Robo == null)
-            {
-                throw new Exception("Invalid robot internal state, reload the application");
-            }
-
-            string? leftArmStateDescriptor = Robo?.LeftArm.State.Descriptor;
-            string? rightArmStateDescriptor = Robo?.RightArm.State.Descriptor;
-
-            switch (leftArmStateDescriptor)
-            {
-                case "Static":
-                    if (Robo != null)
-                    {
-                        Robo.LeftArm.State = new StaticArmState();
-                    }
-                    break;
-                case "Slightly Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.LeftArm.State = new SlightlyContractedArmState();
-                    }
-                    break;
-                case "Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.LeftArm.State = new ContractedArmState();
-                    }
-                    break;
-                case "Heavily Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.LeftArm.State = new HeavilyContractedArmState();
-                    }
-                    break;
-                default:
-                    throw new Exception("Invalid case");
-            }
-
-            switch (rightArmStateDescriptor)
-            {
-                case "Static":
-                    if (Robo != null)
-                    {
-                        Robo.RightArm.State = new StaticArmState();
-                    }
-                    break;
-                case "Slightly Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.RightArm.State = new SlightlyContractedArmState();
-                    }
-                    break;
-                case "Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.RightArm.State = new ContractedArmState();
-                    }
-                    break;
-                case "Heavily Contracted":
-                    if (Robo != null)
-                    {
-                        Robo.RightArm.State = new HeavilyContractedArmState();
-                    }
-                    break;
-                default:
-                    throw new Exception("Invalid case");
-            }
+            Robo = _deserializerHelper.deserializeRobo();
 
             Arm? selectedArm;
 
@@ -124,8 +57,7 @@ namespace RoboProject.Controllers
                     throw new Exception("Unknown command");
             }
 
-            string jsonString = JsonConvert.SerializeObject(Robo);
-            System.IO.File.WriteAllText("robo.json", jsonString);
+            _deserializerHelper.serializeRobo(Robo);
 
             return Ok(Robo);
         }
