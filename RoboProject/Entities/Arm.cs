@@ -1,5 +1,4 @@
 ﻿using RoboProject.Entities.ArmStates;
-using RoboProject.Entities.HeadStates;
 using RoboProject.Entities.Interfaces;
 
 namespace RoboProject.Entities

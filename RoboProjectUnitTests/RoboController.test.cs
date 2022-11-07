@@ -27,7 +27,7 @@ namespace RoboProjectUnitTests
         public void RoboController_Get_ShouldReturnOkResponse_WhenSuccesfullyReturningDeserializedRobo()
         {
             // Arrange
-            Robo robo = new Robo();
+            Robo robo = new();
             _deserializerHelperMock.Setup(_ => _.DeserializeRobo()).Returns(robo);
 
             // Act

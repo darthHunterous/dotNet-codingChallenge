@@ -22,20 +22,6 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
-        public void DeserializerHelper_DeserializeRobo_ShouldThrowAnException_WhenRoboIsNull()
-        {
-            // Arrange
-            _fileHelperMock.Setup(_ => _.ReadAll(It.IsAny<string>()))
-                .Returns("{\"Id\":1,\"Head\":{\"RotationAngle\":-90,\"State\":{\"Descriptor\":\"Static\"}}" +
-                ",\"LeftArm\":{\"RotationAngle\":0,\"State\":{\"Descriptor\":\"Static\"}}," +
-                "\"RightArm\":{\"RotationAngle\":0,\"State\":{\"Descriptor\":\"Static\"}}}");
-            _fileHelperMock.Setup(_ => _.DeserializeRoboObject(It.IsAny<string>())).Returns((Robo?)null);
-
-            // Act & Assert
-            Assert.Throws<Exception>(() => _instance.DeserializeRobo());
-        }
-
-        [Test]
         public void DeserializerHelper_DeserializeRobo_ShouldReturnRobo_WhenOriginalRoboNotNull()
         {
             // Arrange

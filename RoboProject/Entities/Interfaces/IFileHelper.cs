@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Bson;
-
-namespace RoboProject.Entities.Interfaces
+﻿namespace RoboProject.Entities.Interfaces
 {
     public interface IFileHelper
     {

@@ -8,8 +8,6 @@ namespace RoboProject.Controllers
     [Route("/api/robo/head")]
     public class HeadController : ControllerBase
     {
-        private Robo Robo;
-
         private IDeserializerHelper _deserializerHelper;
 
         private readonly ILogger<HeadController> _logger;
@@ -23,29 +21,29 @@ namespace RoboProject.Controllers
         [HttpGet(Name = "GetHeadCommands")]
         public IActionResult Get(string command)
         {
-            Robo = _deserializerHelper.DeserializeRobo();
+            Robo robo = _deserializerHelper.DeserializeRobo();
 
             switch (command)
             {
                 case "lower":
-                    Robo.Head.LowerHead();
+                    robo.Head.LowerHead();
                     break;
                 case "raise":
-                    Robo.Head.RaiseHead();
+                    robo.Head.RaiseHead();
                     break;
                 case "left":
-                    Robo.Head.RotateHeadLeft();
+                    robo.Head.RotateHeadLeft();
                     break;
                 case "right":
-                    Robo.Head.RotateHeadRight();
+                    robo.Head.RotateHeadRight();
                     break;
                 default:
                     throw new Exception("Unknown command");
             }
 
-            _deserializerHelper.SerializeRobo(Robo);
+            _deserializerHelper.SerializeRobo(robo);
 
-            return Ok(Robo);
+            return Ok(robo);
         }
     }
 }

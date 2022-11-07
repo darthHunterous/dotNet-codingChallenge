@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using RoboProject.Entities;
 using RoboProject.Entities.Interfaces;
 
 namespace RoboProject.Controllers

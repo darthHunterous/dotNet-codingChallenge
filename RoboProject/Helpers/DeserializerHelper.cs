@@ -1,30 +1,28 @@
-﻿using RoboProject.Entities.HeadStates;
-using RoboProject.Entities;
-using RoboProject.Entities.Interfaces;
-using Newtonsoft.Json;
+﻿using RoboProject.Entities;
 using RoboProject.Entities.ArmStates;
+using RoboProject.Entities.HeadStates;
+using RoboProject.Entities.Interfaces;
 
 namespace RoboProject.Helpers
 {
     public class DeserializerHelper : IDeserializerHelper
     {
-        private const string jsonFilename = "robo.json";
+        private const string filename = "robo.state";
 
         private IFileHelper _fileHelper;
 
         public DeserializerHelper(IFileHelper fileHelper)
         {
-            _fileHelper = fileHelper; 
+            _fileHelper = fileHelper;
         }
 
-        public Robo? DeserializeRobo()
+        public Robo DeserializeRobo()
         {
-            string roboInternalState = _fileHelper.ReadAll(jsonFilename);
+            string roboInternalState = _fileHelper.ReadAll(filename);
             Robo? robo = _fileHelper.DeserializeRoboObject(roboInternalState);
 
             if (robo == null)
             {
-                //throw new Exception("Invalid robot internal state, reload the application");
                 robo = new Robo();
 
                 SerializeRobo(robo);
@@ -32,7 +30,7 @@ namespace RoboProject.Helpers
 
             SetHeadState(robo.Head);
             SetArmState(robo.LeftArm);
-            SetArmState(robo.RightArm);    
+            SetArmState(robo.RightArm);
 
             return robo;
         }
@@ -40,7 +38,7 @@ namespace RoboProject.Helpers
         public void SerializeRobo(Robo robo)
         {
             string jsonString = _fileHelper.SerializeRoboObject(robo);
-            _fileHelper.WriteAll(jsonFilename, jsonString);
+            _fileHelper.WriteAll(filename, jsonString);
         }
 
         private void SetHeadState(Head head)
