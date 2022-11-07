@@ -40,6 +40,22 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
+        public void DeserializerHelper_DeserializeRobo_ShouldReturnNewDefaultRobo_WhenOriginalRoboNull()
+        {
+            // Arrange
+            Robo robo = new();
+            _fileHelperMock.Setup(_ => _.ReadAll(It.IsAny<string>()))
+                .Returns("null");
+            _fileHelperMock.Setup(_ => _.DeserializeRoboObject(It.IsAny<string>())).Returns((Robo)null);
+
+            // Act
+            var result = _instance.DeserializeRobo();
+
+            // Assert
+            Assert.That(result.Head.State.Descriptor, Is.EqualTo(robo.Head.State.Descriptor));
+        }
+
+        [Test]
         public void DeserializerHelper_SerializeRobo_ShouldExecuteWithoutIssues()
         {
             // Arrange
