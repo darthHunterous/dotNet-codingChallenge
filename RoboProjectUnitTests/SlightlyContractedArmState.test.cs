@@ -16,7 +16,7 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
-        public void HeavilyContractedArmState_ContractArm_ShouldInvokeArmChangeStateToContractedArmState()
+        public void SlightlyContractedArmState_ContractArm_ShouldInvokeArmChangeStateToContractedArmState()
         {
             // Arrange
             Arm arm = new();
@@ -30,7 +30,7 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
-        public void HeavilyContractedArmState_RelaxArm_ShouldInvokeArmChangeStateToStaticArmState()
+        public void SlightlyContractedArmState_RelaxArm_ShouldInvokeArmChangeStateToStaticArmState()
         {
             // Arrange
             Arm arm = new();
@@ -44,7 +44,7 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
-        public void HeavilyContractedArmState_RotateWristClockwise_ShouldThrowAnException()
+        public void SlightlyContractedArmState_RotateWristClockwise_ShouldThrowAnException()
         {
             // Arrange
             Arm arm = new();
@@ -55,7 +55,7 @@ namespace RoboProjectUnitTests
         }
 
         [Test]
-        public void HeavilyContractedArmState_RotateWristCounterClockwise_ShouldThrowAnException()
+        public void SlightlyContractedArmState_RotateWristCounterClockwise_ShouldThrowAnException()
         {
             // Arrange
             Arm arm = new();

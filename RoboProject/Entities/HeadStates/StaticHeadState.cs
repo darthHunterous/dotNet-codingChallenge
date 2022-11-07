@@ -29,7 +29,7 @@ namespace RoboProject.Entities.HeadStates
             }
             else
             {
-                throw new Exception("Static - Robot's head is already at maximum leftmost position");
+                throw new Exception("Robot's head is already at maximum leftmost position");
             }
         }
 

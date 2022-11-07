@@ -23,7 +23,7 @@ namespace RoboProject.Entities.HeadStates
 
         public void RotateHeadLeft(Head head)
         {
-            throw new Exception("Downwards - Robot's head can't be turned in downwards position");
+            throw new Exception("Robot's head can't be turned in downwards position");
         }
 
         public void RotateHeadRight(Head head)
