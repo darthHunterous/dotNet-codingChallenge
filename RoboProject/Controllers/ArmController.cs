@@ -8,8 +8,6 @@ namespace RoboProject.Controllers
     [Route("/api/robo/arm")]
     public class ArmController : ControllerBase
     {
-        private Robo? Robo;
-
         private IDeserializerHelper _deserializerHelper;
 
         private readonly ILogger<HeadController> _logger;
@@ -21,19 +19,19 @@ namespace RoboProject.Controllers
         }
 
         [HttpGet(Name = "GetArmCommands")]
-        public IActionResult Get(string command, string arm)
+        public IActionResult Get(string arm, string command)
         {
-            Robo = _deserializerHelper.DeserializeRobo();
+            Robo robo = _deserializerHelper.DeserializeRobo();
 
-            Arm? selectedArm;
+            Arm selectedArm;
 
             switch (arm)
             {
                 case "left":
-                    selectedArm = Robo?.LeftArm;
+                    selectedArm = robo.LeftArm;
                     break;
                 case "right":
-                    selectedArm = Robo?.RightArm;
+                    selectedArm = robo.RightArm;
                     break;
                 default:
                     throw new Exception("Invalid arm, select left or right");
@@ -42,24 +40,24 @@ namespace RoboProject.Controllers
             switch (command)
             {
                 case "contract":
-                    selectedArm?.ContractArm();
+                    selectedArm.ContractArm();
                     break;
                 case "relax":
-                    selectedArm?.RelaxArm();
+                    selectedArm.RelaxArm();
                     break;
                 case "clockwise":
-                    selectedArm?.RotateWristClockwise();
+                    selectedArm.RotateWristClockwise();
                     break;
                 case "counterclockwise":
-                    selectedArm?.RotateWristCounterClockwise();
+                    selectedArm.RotateWristCounterClockwise();
                     break;
                 default:
                     throw new Exception("Unknown command");
             }
 
-            _deserializerHelper.SerializeRobo(Robo);
+            _deserializerHelper.SerializeRobo(robo);
 
-            return Ok(Robo);
+            return Ok(robo);
         }
     }
 }
