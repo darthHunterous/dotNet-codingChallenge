@@ -2,8 +2,8 @@
 {
     public interface IDeserializerHelper
     {
-        public Robo? DeserializeRobo();
+        public Robo DeserializeRobo();
 
-        public void SerializeRobo(Robo? robo);
+        public void SerializeRobo(Robo robo);
     }
 }

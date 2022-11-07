@@ -24,7 +24,10 @@ namespace RoboProject.Helpers
 
             if (robo == null)
             {
-                throw new Exception("Invalid robot internal state, reload the application");
+                //throw new Exception("Invalid robot internal state, reload the application");
+                robo = new Robo();
+
+                SerializeRobo(robo);
             }
 
             SetHeadState(robo.Head);
@@ -34,7 +37,7 @@ namespace RoboProject.Helpers
             return robo;
         }
 
-        public void SerializeRobo(Robo? robo)
+        public void SerializeRobo(Robo robo)
         {
             string jsonString = _fileHelper.SerializeRoboObject(robo);
             _fileHelper.WriteAll(jsonFilename, jsonString);

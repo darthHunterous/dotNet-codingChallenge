@@ -8,7 +8,7 @@ namespace RoboProject.Controllers
     [Route("/api/robo/head")]
     public class HeadController : ControllerBase
     {
-        private Robo? Robo;
+        private Robo Robo;
 
         private IDeserializerHelper _deserializerHelper;
 
@@ -28,16 +28,16 @@ namespace RoboProject.Controllers
             switch (command)
             {
                 case "lower":
-                    Robo?.Head.LowerHead();
+                    Robo.Head.LowerHead();
                     break;
                 case "raise":
-                    Robo?.Head.RaiseHead();
+                    Robo.Head.RaiseHead();
                     break;
                 case "left":
-                    Robo?.Head.RotateHeadLeft();
+                    Robo.Head.RotateHeadLeft();
                     break;
                 case "right":
-                    Robo?.Head.RotateHeadRight();
+                    Robo.Head.RotateHeadRight();
                     break;
                 default:
                     throw new Exception("Unknown command");

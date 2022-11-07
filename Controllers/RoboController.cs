@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RoboProject.Entities;
+using RoboProject.Entities.Interfaces;
 
 namespace RoboProject.Controllers
 {
@@ -8,30 +9,19 @@ namespace RoboProject.Controllers
     [Route("/api/robo")]
     public class RoboController : ControllerBase
     {
-        private Robo? Robo;
-
         private readonly ILogger<RoboController> _logger;
+        private IDeserializerHelper _deserializerHelper;
 
-        public RoboController(ILogger<RoboController> logger)
+        public RoboController(ILogger<RoboController> logger, IDeserializerHelper deserializerHelper)
         {
             _logger = logger;
+            _deserializerHelper = deserializerHelper;
         }
 
         [HttpGet(Name = "GetRoboInformation")]
         public IActionResult Get()
         {
-            string roboState = System.IO.File.ReadAllText("robo.json");
-            Robo = JsonConvert.DeserializeObject<Robo>(roboState);
-
-            if (Robo == null)
-            {
-                Robo = new Robo();
-
-                string jsonString = JsonConvert.SerializeObject(Robo);
-                System.IO.File.WriteAllText("robo.json", jsonString);
-            }
-
-            return Ok(Robo);
+            return Ok(_deserializerHelper.DeserializeRobo());
         }
     }
 }
