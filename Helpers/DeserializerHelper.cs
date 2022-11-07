@@ -10,30 +10,37 @@ namespace RoboProject.Helpers
     {
         private const string jsonFilename = "robo.json";
 
-        public Robo? deserializeRobo()
+        private IFileHelper _fileHelper;
+
+        public DeserializerHelper(IFileHelper fileHelper)
         {
-            string roboInternalState = File.ReadAllText(jsonFilename);
-            Robo? robo = JsonConvert.DeserializeObject<Robo>(roboInternalState);
+            _fileHelper = fileHelper; 
+        }
+
+        public Robo? DeserializeRobo()
+        {
+            string roboInternalState = _fileHelper.ReadAll(jsonFilename);
+            Robo? robo = _fileHelper.DeserializeRoboObject(roboInternalState);
 
             if (robo == null)
             {
                 throw new Exception("Invalid robot internal state, reload the application");
             }
 
-            setHeadState(robo.Head);
-            setArmState(robo.LeftArm);
-            setArmState(robo.RightArm);    
+            SetHeadState(robo.Head);
+            SetArmState(robo.LeftArm);
+            SetArmState(robo.RightArm);    
 
             return robo;
         }
 
-        public void serializeRobo(Robo? robo)
+        public void SerializeRobo(Robo? robo)
         {
-            string jsonString = JsonConvert.SerializeObject(robo);
-            File.WriteAllText(jsonFilename, jsonString);
+            string jsonString = _fileHelper.SerializeRoboObject(robo);
+            _fileHelper.WriteAll(jsonFilename, jsonString);
         }
 
-        private void setHeadState(Head head)
+        private void SetHeadState(Head head)
         {
             string? headStateDescriptor = head.State.Descriptor;
 
@@ -53,7 +60,7 @@ namespace RoboProject.Helpers
             }
         }
 
-        private void setArmState(Arm arm)
+        private void SetArmState(Arm arm)
         {
             string armStateDescriptor = arm.State.Descriptor;
 

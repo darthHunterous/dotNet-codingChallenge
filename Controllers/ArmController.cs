@@ -23,7 +23,7 @@ namespace RoboProject.Controllers
         [HttpGet(Name = "GetArmCommands")]
         public IActionResult Get(string command, string arm)
         {
-            Robo = _deserializerHelper.deserializeRobo();
+            Robo = _deserializerHelper.DeserializeRobo();
 
             Arm? selectedArm;
 
@@ -57,7 +57,7 @@ namespace RoboProject.Controllers
                     throw new Exception("Unknown command");
             }
 
-            _deserializerHelper.serializeRobo(Robo);
+            _deserializerHelper.SerializeRobo(Robo);
 
             return Ok(Robo);
         }

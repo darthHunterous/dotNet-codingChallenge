@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddScoped<IDeserializerHelper, DeserializerHelper>();
+builder.Services.AddScoped<IFileHelper, FileHelper>();
 
 //
 builder.Services.AddDistributedMemoryCache();

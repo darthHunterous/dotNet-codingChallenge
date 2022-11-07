@@ -23,7 +23,7 @@ namespace RoboProject.Controllers
         [HttpGet(Name = "GetHeadCommands")]
         public IActionResult Get(string command)
         {
-            Robo = _deserializerHelper.deserializeRobo();
+            Robo = _deserializerHelper.DeserializeRobo();
 
             switch (command)
             {
@@ -43,7 +43,7 @@ namespace RoboProject.Controllers
                     throw new Exception("Unknown command");
             }
 
-            _deserializerHelper.serializeRobo(Robo);
+            _deserializerHelper.SerializeRobo(Robo);
 
             return Ok(Robo);
         }
