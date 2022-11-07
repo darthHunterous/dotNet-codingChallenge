@@ -8,10 +8,10 @@ namespace RoboProject.Controllers
     [Route("/api/robo/reset")]
     public class ResetController : ControllerBase
     {
-        private readonly ILogger<RoboController> _logger;
+        private readonly ILogger<ResetController> _logger;
         private IDeserializerHelper _deserializerHelper;
 
-        public ResetController(ILogger<RoboController> logger, IDeserializerHelper deserializerHelper)
+        public ResetController(ILogger<ResetController> logger, IDeserializerHelper deserializerHelper)
         {
             _logger = logger;
             _deserializerHelper = deserializerHelper;
